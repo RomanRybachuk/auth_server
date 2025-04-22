@@ -1,0 +1,10 @@
+"use strict";
+// import dotenv from "dotenv";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CORS_ORIGINS = exports.JWT_REFRESH_TOKEN_EXPIRY = exports.JWT_REFRESH_TOKEN_SECRET = exports.JWT_ACCESS_TOKEN_EXPIRY = exports.JWT_ACCESS_TOKEN_SECRET = void 0;
+// dotenv.config();
+exports.JWT_ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_TOKEN_SECRET;
+exports.JWT_ACCESS_TOKEN_EXPIRY = process.env.JWT_ACCESS_TOKEN_EXPIRY;
+exports.JWT_REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_TOKEN_SECRET;
+exports.JWT_REFRESH_TOKEN_EXPIRY = process.env.JWT_REFRESH_TOKEN_EXPIRY;
+exports.CORS_ORIGINS = ["http://localhost:5173", "http://localhost:5500"];
