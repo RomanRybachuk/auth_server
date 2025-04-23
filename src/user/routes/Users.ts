@@ -3,6 +3,6 @@ import authController from "../controllers";
 
 const router = Router();
 
-router.get("/getAuth", authController.getAuth.bind(authController));
+router.get("/verifyUser", authController.verifyUser.bind(authController));
 
 export default router;

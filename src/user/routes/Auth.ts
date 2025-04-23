@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validateRequest } from "../middlewares";
-import { createUserSchema } from "../validation";
+import { createUserSchema } from "app-fullstack-types/dist";
 import authController from "../controllers";
 
 const router = Router();

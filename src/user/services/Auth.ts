@@ -1,5 +1,5 @@
 import jwt from "./Jwt";
-import type { RegisterUserInput } from "../validation";
+import { RegisterUserInput } from "app-fullstack-types/dist";
 import userService from "../services/User";
 import bcrypt from "bcrypt";
 import { Prisma } from "@prisma/client";
@@ -41,7 +41,7 @@ class AuthService {
 
     if (!user) throw new Error("Forbidden");
 
-    const decoded = await this.jwt.verify(user.refresh_token, "refresh");
+    const decoded = await this.jwt.verify(refreshToken, "refresh");
 
     if (!decoded || decoded.email !== user.email) throw new Error("Forbidden");
 

@@ -10,7 +10,7 @@ class AuthController {
     this.authService = authService;
   }
 
-  async getAuth(request: IRequest, response: Response, next: NextFunction) {
+  async verifyUser(request: IRequest, response: Response, next: NextFunction) {
     try {
       if (!request.user) {
         throw new Error("Unauthorized");
@@ -26,7 +26,7 @@ class AuthController {
     try {
       const accessToken = await this.authService.refresh(request.cookies.jwt);
 
-      response.status(200).json({ success: true, data: accessToken });
+      response.status(201).json({ success: true, data: accessToken });
     } catch (error) {
       next(error);
     }

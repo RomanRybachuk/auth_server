@@ -43,7 +43,7 @@ export function verifyAuth() {
 
     if (!verify)
       return response
-        .status(403)
+        .status(401)
         .json({ success: false, message: "Forbidden" });
 
     const userData = await userService.getUniqueUser({
