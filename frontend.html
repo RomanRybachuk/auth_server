@@ -38,6 +38,51 @@
     </form>
     <script>
       async function main() {
+        let authReponse = await fetch(
+          "http://localhost:3000/api/users/getAuth",
+          {
+            headers: {
+              Authorization: `Baerer ${window.localStorage.getItem(
+                "accessToken"
+              )}`,
+            },
+            credentials: "include",
+          }
+        );
+
+        console.log("authReponse.status", authReponse.status);
+
+        if (authReponse.status === 403) {
+          const refreshReponse = await fetch(
+            "http://localhost:3000/api/auth/refresh",
+            {
+              method: "POST",
+              credentials: "include",
+            }
+          );
+
+          const refreshData = await refreshReponse.json();
+
+          window.localStorage.setItem("accessToken", refreshData.data);
+
+          console.log("refreshReponse", refreshReponse.status);
+
+          authReponse = await fetch("http://localhost:3000/api/users/getAuth", {
+            headers: {
+              Authorization: `Baerer ${window.localStorage.getItem(
+                "accessToken"
+              )}`,
+            },
+            credentials: "include",
+          });
+
+          console.log("authReponse", authReponse.status);
+        }
+
+        const authData = await authReponse.json();
+
+        console.log("authData", authData);
+
         document
           .querySelector("form")
           .addEventListener("submit", async (event) => {
@@ -51,7 +96,7 @@
               "input[name=password]"
             ).value;
 
-            const res = await fetch("http://localhost:3000/api/user/register", {
+            const res = await fetch("http://localhost:3000/api/auth/register", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

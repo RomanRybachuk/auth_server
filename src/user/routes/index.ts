@@ -1,20 +1,12 @@
 import { Router } from "express";
-import authController from "../controllers";
-import { validateRequest } from "../middlewares";
-import { createUserSchema } from "../validation";
+import { verifyAuth } from "../middlewares";
+
+import authRouter from "./Auth";
+import usersRouter from "./Users";
 
 const router = Router();
 
-router.use("/user", router);
-
-// Requests
-// router.get("/get/:id", getUser);
-router.post(
-  "/register",
-  validateRequest(createUserSchema),
-  authController.register.bind(authController)
-);
-// router.put("/update", updateUser);
-// router.delete("/delete", deleteUser);
+router.use("/users", verifyAuth(), usersRouter);
+router.use("/auth", authRouter);
 
 export default router;

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { IRequest } from "../../types/express";
 
 import authService from "../services/Auth";
 
@@ -7,6 +8,28 @@ class AuthController {
 
   constructor() {
     this.authService = authService;
+  }
+
+  async getAuth(request: IRequest, response: Response, next: NextFunction) {
+    try {
+      if (!request.user) {
+        throw new Error("Unauthorized");
+      }
+
+      response.status(200).json({ success: true, data: request.user });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async refresh(request: Request, response: Response, next: NextFunction) {
+    try {
+      const accessToken = await this.authService.refresh(request.cookies.jwt);
+
+      response.status(200).json({ success: true, data: accessToken });
+    } catch (error) {
+      next(error);
+    }
   }
 
   async register(request: Request, response: Response, next: NextFunction) {
